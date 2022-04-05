@@ -8,7 +8,7 @@ import {
   WalletSettings,
   WalletType
 } from "@/types/internal";
-import { ErgoBox } from "./connector";
+import { ErgoBox, Token } from "./connector";
 
 export interface IDbWallet {
   id?: number;
@@ -68,4 +68,24 @@ export interface IDbUtxo {
   content?: ErgoBox;
   address?: string;
   walletId: number;
+}
+
+export interface ITransaction {
+  id: string;
+  type: TransactionType;
+  height: number;
+  timeStamp: Date;
+  fee: string;
+  assets: TokenAmount[];
+}
+
+export type TokenAmount = {
+  tokenId: string;
+  amount: string;
+};
+
+export enum TransactionType {
+  Sent = "sent",
+  Received = "received",
+  Intrawallet = "intrawallet"
 }
