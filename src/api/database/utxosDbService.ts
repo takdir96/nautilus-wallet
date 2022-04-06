@@ -1,4 +1,4 @@
-import { IDbUtxo } from "@/types/database";
+import { IDbUTxO } from "@/types/database";
 import { dbContext } from "@/api/database/dbContext";
 import { ErgoBox, ErgoTx } from "@/types/connector";
 import { addressesDbService } from "./addressesDbService";
@@ -7,19 +7,19 @@ import BigNumber from "bignumber.js";
 import { isEmpty } from "lodash";
 
 class UTxOsDbService {
-  public async getAllPending(): Promise<IDbUtxo[]> {
+  public async getAllPending(): Promise<IDbUTxO[]> {
     return await dbContext.utxos.where("spentTxId").notEqual("").toArray();
   }
 
-  public async getByBoxId(boxId: string): Promise<IDbUtxo | undefined> {
+  public async getByBoxId(boxId: string): Promise<IDbUTxO | undefined> {
     return await dbContext.utxos.where({ boxId }).first();
   }
 
-  public async getByTxId(txId: string): Promise<IDbUtxo[]> {
+  public async getByTxId(txId: string): Promise<IDbUTxO[]> {
     return await dbContext.utxos.where({ spentTxId: txId }).toArray();
   }
 
-  public async getByWalletId(walletId: number): Promise<IDbUtxo[]> {
+  public async getByWalletId(walletId: number): Promise<IDbUTxO[]> {
     return await dbContext.utxos.where({ walletId }).toArray();
   }
 
@@ -43,7 +43,7 @@ class UTxOsDbService {
           spentTxId: signedTx.id,
           spentTimestamp: Date.now(),
           walletId
-        } as IDbUtxo;
+        } as IDbUTxO;
       })
       .concat(
         signedTx.outputs
@@ -58,7 +58,7 @@ class UTxOsDbService {
               spentTimestamp: Date.now(),
               address: addressFromErgoTree(output.ergoTree),
               walletId
-            } as IDbUtxo;
+            } as IDbUTxO;
           })
       );
 

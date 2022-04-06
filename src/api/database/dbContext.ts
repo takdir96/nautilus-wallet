@@ -4,7 +4,7 @@ import {
   IDbAddress,
   IDbAsset,
   IDbWallet,
-  IDbUtxo,
+  IDbUTxO,
   IAssetInfo
 } from "@/types/database";
 import { uniqBy } from "lodash";
@@ -15,7 +15,7 @@ class NautilusDb extends Dexie {
   addresses!: Table<IDbAddress, string>;
   assets!: Table<IDbAsset, string[]>;
   connectedDApps!: Table<IDbDAppConnection, string>;
-  utxos!: Table<IDbUtxo, string>;
+  utxos!: Table<IDbUTxO, string>;
   assetInfo!: Table<IAssetInfo, string>;
 
   constructor() {
@@ -74,6 +74,10 @@ class NautilusDb extends Dexie {
         );
         await t.table("assetInfo").bulkAdd(assetInfo);
       });
+
+    this.version(7).stores({
+      transactions: "&id, type, height, timeStamp"
+    });
   }
 }
 

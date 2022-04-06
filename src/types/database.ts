@@ -59,14 +59,14 @@ export interface IAssetInfo {
   artworkHash?: string;
 }
 
-export interface IDbUtxo {
+export interface IDbUTxO {
   id: string;
   confirmed: boolean;
   locked: boolean;
   spentTxId: string;
+  address?: string;
   spentTimestamp?: number;
   content?: ErgoBox;
-  address?: string;
   walletId: number;
 }
 
@@ -75,11 +75,11 @@ export interface ITransaction {
   type: TransactionType;
   height: number;
   timeStamp: Date;
-  fee: string;
-  assets: TokenAmount[];
+  fee?: string;
+  assets: AssetAmount[];
 }
 
-export type TokenAmount = {
+export type AssetAmount = {
   tokenId: string;
   amount: string;
 };
